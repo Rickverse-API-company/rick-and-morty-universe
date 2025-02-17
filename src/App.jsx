@@ -1,5 +1,5 @@
 import './App.css'
-
+import CharacterList from './components/CharacterList'
 function App() {
 
 
@@ -8,6 +8,7 @@ function App() {
       <h1>
         Rick And Morty
       </h1>
+      <CharacterList/>
     </>
   )
 }
