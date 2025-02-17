@@ -1,0 +1,142 @@
+.character-details {
+  padding: 4rem 0;
+  background-color: var(--background-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.details-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.details-content {
+  color: var(--text-color);
+}
+
+.details-title {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+}
+
+.details-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.abilities-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ability-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--card-background);
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.ability-item:hover {
+  transform: translateX(10px);
+}
+
+.ability-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-color);
+}
+
+.ability-text {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.details-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(151, 206, 76, 0.3);
+}
+
+.portal-effect {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle at center, var(--primary-color) 0%, transparent 70%);
+  opacity: 0.1;
+  border-radius: 50%;
+  animation: portalPulse 4s ease-in-out infinite;
+}
+
+.portal-effect-1 {
+  top: 20%;
+  left: 10%;
+}
+
+.portal-effect-2 {
+  bottom: 30%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+@keyframes portalPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+}
+
+@media (max-width: 968px) {
+  .details-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .details-image {
+    margin: 0 auto;
+  }
+
+  .ability-item {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .character-details {
+    padding: 2rem 0;
+  }
+
+  .details-container {
+    padding: 0 1rem;
+  }
+
+  .details-title {
+    font-size: 2rem;
+  }
+
+  .details-description {
+    font-size: 1rem;
+  }
+}

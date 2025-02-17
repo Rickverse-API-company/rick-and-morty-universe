@@ -1,0 +1,159 @@
+.add-character-section {
+  padding: 4rem 0;
+  background-color: var(--background-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--card-background);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(151, 206, 76, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.form-title {
+  font-size: 2rem;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+}
+
+.character-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 0.8rem 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--hover-color);
+  box-shadow: 0 0 0 3px rgba(151, 206, 76, 0.2);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.file-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.file-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(151, 206, 76, 0.1);
+  border: 2px dashed var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-input-label:hover {
+  background-color: rgba(151, 206, 76, 0.15);
+  border-color: var(--hover-color);
+}
+
+.file-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: var(--background-darker);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+.portal-decoration {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at center, var(--primary-color) 0%, transparent 70%);
+  opacity: 0.1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.portal-top-right {
+  top: -150px;
+  right: -150px;
+}
+
+.portal-bottom-left {
+  bottom: -150px;
+  left: -150px;
+}
+
+@media (max-width: 768px) {
+  .add-character-section {
+    padding: 2rem 0;
+  }
+
+  .form-container {
+    margin: 0 1rem;
+    padding: 1.5rem;
+  }
+
+  .form-title {
+    font-size: 1.75rem;
+  }
+
+  .submit-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
