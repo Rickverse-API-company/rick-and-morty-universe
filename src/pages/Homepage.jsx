@@ -15,22 +15,24 @@ function HomePage() {
     const [CharacterToDisplay, setCharacterToDisplay] = useState([]);
     const [searchTerm, setSearchTerm] = useState(""); /* state to the filter */
 
-    useEffect(() => {
+    const fetchCharacters = () => {
         axios.get("https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character.json")
             .then(response => {
                 const characterObj = response.data;
-
                 const charactersArr = Object.keys(characterObj).map((id) => ({
                     id,
                     ...characterObj[id],
                 }));
-
                 setCharacterToDisplay(charactersArr);
                 console.log(charactersArr)
             })
             .catch((error) => {
                 console.log("error Page")
             })
+    };
+
+    useEffect(() => {
+        fetchCharacters();
     }, [])
 
     if (CharacterToDisplay === null) {
@@ -63,7 +65,7 @@ function HomePage() {
 
             <div className="add-character">
                 <h2>Add a Character</h2>
-                <AddCharacterForm />
+                <AddCharacterForm onCharacterAdded={fetchCharacters} />
             </div>
         </main>
     )
