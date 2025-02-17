@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 function AddCharacterForm({ onCharacterAdded }) {
     const [name, setName] = useState('')
@@ -16,10 +15,8 @@ function AddCharacterForm({ onCharacterAdded }) {
             image
         }
         
-        axios.post('https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character.json', newCharacter)
-            .then(response => {
-                console.log('Character added successfully:', response.data)
-                onCharacterAdded(); // Call the callback to refresh the character list
+        onCharacterAdded(newCharacter)
+            .then(() => {
                 setName('');
                 setSpecies('');
                 setImage('');

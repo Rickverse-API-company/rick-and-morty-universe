@@ -1,6 +1,7 @@
 import React from 'react'
 
-const CharacterList = ({ characters }) => {
+
+const CharacterList = ({ characters, onDelete }) => {
 
     return (
         <div>
@@ -11,6 +12,8 @@ const CharacterList = ({ characters }) => {
                         <h2>{characterDetail.name}</h2>
                         <h3>{characterDetail.species}</h3>
                         <img src={characterDetail.image} alt={characterDetail.name} />
+
+                        <button onClick={() => onDelete(characterDetail.id)}>Delete Character</button> 
                     </div>
                 ))
             ) : (
