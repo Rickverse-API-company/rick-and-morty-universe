@@ -13,16 +13,18 @@ import './homepage.css'
 function HomePage() {
 
     const [CharacterToDisplay, setCharacterToDisplay] = useState([]);
-    const [searchTerm, setSearchTerm] = useState(""); /* state to the filter */
+    const [searchTerm, setSearchTerm] = useState("");
 
     const fetchCharacters = () => {
         axios.get("https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character.json")
             .then(response => {
                 const characterObj = response.data;
-                const charactersArr = Object.keys(characterObj).map((id) => ({
-                    id,
-                    ...characterObj[id],
-                }));
+                const charactersArr = Object.keys(characterObj)
+                    .filter(id => characterObj[id] !== null)
+                    .map((id) => ({
+                        id,
+                        ...characterObj[id],
+                    }));
                 setCharacterToDisplay(charactersArr);
                 console.log(charactersArr)
             })
@@ -39,8 +41,44 @@ function HomePage() {
         console.log("...loading")
     }
     const filteredCharacters = CharacterToDisplay.filter((character) =>
-        character.name.toLowerCase().includes(searchTerm.toLowerCase())
+        character && character.name ? character.name.toLowerCase().includes(searchTerm.toLowerCase()) : false
     );
+
+    const onDelete = (id) => {
+        axios.delete(`https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character/${id}.json`)
+            .then(response => {
+                console.log('Character deleted successfully:', response.data)
+                fetchCharacters();
+            })
+            .catch(error => {
+                console.error('Error deleting character:', error)
+            })
+    }
+
+    const createCharacter = (characterDetails) => {
+        const characterIds = CharacterToDisplay.map((character) => 
+            parseInt(character.id)
+        );
+        const maxId = characterIds.length > 0 ? Math.max(...characterIds) : 0;
+        const nextId = maxId + 1;
+    
+        const newCharacter = {
+            ...characterDetails,
+            id: nextId.toString()
+        };
+        
+        return axios.post('https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character.json', newCharacter)
+            .then(response => {
+                console.log('Character added successfully:', response.data);
+                fetchCharacters();
+                return response.data;
+            })
+            .catch(error => {
+                console.error('Error adding character:', error);
+                throw error;
+            });
+    };
+
     return (
         <main className="HomePage">
 
@@ -55,7 +93,7 @@ function HomePage() {
 
             <div className="character-list">
                 <h2>Featured Characters</h2>
-                <CharacterList characters={filteredCharacters} />
+                <CharacterList characters={filteredCharacters} onDelete={onDelete} />
             </div>
 
             <div className="character-details">
@@ -65,7 +103,7 @@ function HomePage() {
 
             <div className="add-character">
                 <h2>Add a Character</h2>
-                <AddCharacterForm onCharacterAdded={fetchCharacters} />
+                <AddCharacterForm onCharacterAdded={createCharacter} />
             </div>
         </main>
     )
