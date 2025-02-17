@@ -1,0 +1,132 @@
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.search-form {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  padding-right: 4rem;
+  font-size: 1.1rem;
+  background-color: var(--card-background);
+  border: 2px solid var(--primary-color);
+  border-radius: 50px;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(151, 206, 76, 0.3);
+  border-color: var(--hover-color);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--background-darker);
+}
+
+.search-results {
+  margin-top: 1rem;
+  background-color: var(--card-background);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(151, 206, 76, 0.2);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: rgba(151, 206, 76, 0.1);
+}
+
+.search-result-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+}
+
+.search-result-info {
+  flex: 1;
+}
+
+.search-result-name {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.search-result-species {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    margin: 1rem auto;
+  }
+
+  .search-input {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+    padding-right: 3.5rem;
+  }
+
+  .search-button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .search-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
