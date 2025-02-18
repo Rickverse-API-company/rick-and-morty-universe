@@ -27,7 +27,7 @@ const CharacterList = ({ characters, onDelete }) => {
                         >
                             <img
                                 src={characterDetail.image}
-                                alt={characterDetail.name}
+                                alt={characterDetail.id}
                                 className="character-image"
                             />
                             <div className="character-info">
