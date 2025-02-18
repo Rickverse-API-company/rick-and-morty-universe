@@ -107,13 +107,15 @@ function HomePage() {
     return (
         <main className="HomePage">
 
-            <div className="search-section">
-                <h2>Search for a character</h2>
-                <Search setSearchTerm={setSearchTerm} />
-            </div>
+            
 
             <div id="homepage-hero-section">
                 <HeroSection />
+            </div>
+
+            <div className="search-section">
+               
+                <Search setSearchTerm={setSearchTerm} />
             </div>
 
             <div className="character-list">
@@ -121,14 +123,10 @@ function HomePage() {
                 <CharacterList characters={filteredCharacters} onDelete={softDeleteCharacter} />
             </div>
 
-            <div className="character-details">
-                <h2>Character Details</h2>
-                <CharacterDetails />
-            </div>
+           
 
             <div className="add-character">
-                <h2>Add a Character</h2>
-                <AddCharacterForm onCharacterAdded={createCharacter} />
+            <AddCharacterForm onCharacterAdded={createCharacter} />
             </div>
         </main>
     )

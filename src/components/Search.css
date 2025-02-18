@@ -8,6 +8,8 @@
 .search-form {
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
@@ -19,17 +21,24 @@
   border: 2px solid var(--primary-color);
   border-radius: 50px;
   color: var(--text-color);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
 }
 
 .search-input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(151, 206, 76, 0.3);
+  box-shadow: 0 0 15px rgba(151, 206, 76, 0.25);
   border-color: var(--hover-color);
+  transform: scale(1.01);
 }
 
 .search-input::placeholder {
   color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease;
+}
+
+.search-input:focus::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .search-button {
@@ -40,24 +49,38 @@
   background-color: var(--primary-color);
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .search-button:hover {
   background-color: var(--hover-color);
   transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 4px 12px rgba(151, 206, 76, 0.3);
+}
+
+.search-button:active {
+  transform: translateY(-50%) scale(0.95);
 }
 
 .search-icon {
-  width: 20px;
-  height: 20px;
   color: var(--background-darker);
+  transition: transform 0.3s ease;
+}
+
+.search-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.search-button:hover .search-icon {
+  transform: scale(1.1);
 }
 
 .search-results {
@@ -121,12 +144,24 @@
   }
 
   .search-button {
-    width: 35px;
-    height: 35px;
+    width: 36px;
+    height: 36px;
   }
 
-  .search-icon {
-    width: 18px;
-    height: 18px;
+  .search-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    padding: 0 0.5rem;
+  }
+  
+  .search-input {
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+    padding-right: 3rem;
   }
 }
