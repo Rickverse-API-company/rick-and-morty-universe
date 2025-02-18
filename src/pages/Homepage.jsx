@@ -4,15 +4,17 @@ import Search from '../components/Search';
 import CharacterList from '../components/characterlist'
 import AddCharacterForm from '../components/addcharacterform'
 import HeroSection from '../components/HeroSection'
+import LocationList from '../components/LocationList'
 import './homepage.css'
 import { API_URL } from "../config/api";
 
-function HomePage({ characters, setCharacters }) {
+function HomePage({ characters = [], setCharacters, location = [], setLocation }) {
     const [searchTerm, setSearchTerm] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [charactersLoading, setCharactersLoading] = useState(true);
+    const [locationsLoading, setLocationsLoading] = useState(true);
 
     const fetchCharacters = () => {
-        setLoading(true);
+        setCharactersLoading(true);
         axios.get(`${API_URL}/character.json`)
             .then(response => {
                 const characterObj = response.data;
@@ -38,7 +40,44 @@ function HomePage({ characters, setCharacters }) {
                 setCharacters([]);
             })
             .finally(() => {
-                setLoading(false);
+                setCharactersLoading(false);
+            });
+    };
+
+    const fetchLocation = () => {
+        setLocationsLoading(true);
+        axios.get(`${API_URL}/location.json`)
+            .then(response => {
+                const locationObj = response.data;
+                if (!locationObj) {
+                    console.log('No location data received');
+                    if (typeof setLocation === 'function') {
+                        setLocation([]);
+                    }
+                    return;
+                }
+                
+                const locationArr = Object.entries(locationObj)
+                    .filter(([_, location]) => location !== null)
+                    .map(([id, location]) => ({
+                        ...location,
+                        id: id.toString(),
+                        isDeleted: location.isDeleted ?? false,
+                    }));
+                
+                console.log('Fetched locations:', locationArr);
+                if (typeof setLocation === 'function') {
+                    setLocation(locationArr);
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching locations:", error);
+                if (typeof setLocation === 'function') {
+                    setLocation([]);
+                }
+            })
+            .finally(() => {
+                setLocationsLoading(false);
             });
     };
 
@@ -46,11 +85,19 @@ function HomePage({ characters, setCharacters }) {
         if (characters.length === 0) {
             fetchCharacters();
         } else {
-            setLoading(false);
+            setCharactersLoading(false);
         }
     }, [characters.length]);
 
-    if (loading) {
+    useEffect(() => {
+        if (!location || location.length === 0) {
+            fetchLocation();
+        } else {
+            setLocationsLoading(false);
+        }
+    }, []);
+
+    if (charactersLoading || locationsLoading) {
         return <div>Loading...</div>;
     }
 
@@ -128,6 +175,15 @@ function HomePage({ characters, setCharacters }) {
             <div className="add-character">
                 <AddCharacterForm onCharacterAdded={createCharacter} />
             </div>
+
+            <div className="location-list">
+                <h2>Locations</h2>
+                <LocationList locations={location} setLocation={setLocation} />
+            </div>
+
+            
+
+            
         </main>
     )
 }
