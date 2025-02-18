@@ -2,11 +2,11 @@ import React from 'react'
 import './CharacterList.css'
 import { useNavigate } from 'react-router-dom'
 
+
 const CharacterList = ({ characters, onDelete }) => {
     const navigate = useNavigate()
     
     const handleCharacterClick = (characterDetail) => {
-        console.log('Clicked character:', characterDetail);
         navigate(`/character/${characterDetail.id}`);
     };
 
