@@ -41,7 +41,13 @@ const CharacterDetails = ({ characters }) => {
                     {character.location && (
                         <p className="character-location">Location: {character.location.name}</p>
                     )}
+                    <p className="character-gender">{character.gender}</p>
+                    <p className="character-origin">Origin: {character.origin.name}</p>
+                    <p className="episode-count">Episodes: {character.episode.length}</p>
                 </div>
+
+                
+            
             </div>
         </div>
     )
