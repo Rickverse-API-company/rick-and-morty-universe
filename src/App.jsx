@@ -8,12 +8,13 @@ import Footer from './components/footer'
 
 function App() {
   const [characters, setCharacters] = useState([]);
+  const [location, setLocation] = useState([]);
 
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage characters={characters} setCharacters={setCharacters} />} />
+        <Route path="/" element={<HomePage characters={characters} setCharacters={setCharacters} location={location} setLocation={setLocation} />} />
         <Route path="/character/:id" element={<CharacterDetails characters={characters} />} />
         <Route path="*" element={<h1>Page not found</h1>} />
       </Routes>

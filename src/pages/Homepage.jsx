@@ -68,7 +68,7 @@ function HomePage({ characters = [], setCharacters, location = [], setLocation }
             })
             .catch((error) => {
                 console.error("Error fetching locations:", error);
-                setLocation([]);
+                
             })
             .finally(() => {
                 setLocationsLoading(false);
