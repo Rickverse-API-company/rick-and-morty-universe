@@ -7,6 +7,7 @@ import CharacterDetails from '../components/characterdetails'
 import AddCharacterForm from '../components/addcharacterform'
 import HeroSection from '../components/HeroSection'
 import './homepage.css'
+import { API_URL } from "../config/api";
 
 
 
@@ -16,7 +17,7 @@ function HomePage() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const fetchCharacters = () => {
-        axios.get("https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character.json")
+        axios.get(`${API_URL}/character.json`)
             .then(response => {
                 const characterObj = response.data;
                 const charactersArr = Object.keys(characterObj)
@@ -45,7 +46,7 @@ function HomePage() {
     );
 
     const onDelete = (id) => {
-        axios.delete(`https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character/${id}.json`)
+        axios.delete(`${API_URL}/character/${id}.json`)
             .then(response => {
                 console.log('Character deleted successfully:', response.data)
                 fetchCharacters();
@@ -67,7 +68,7 @@ function HomePage() {
             id: nextId.toString()
         };
         
-        return axios.post('https://rick-morty-universe-5598d-default-rtdb.europe-west1.firebasedatabase.app/character.json', newCharacter)
+        return axios.post(`${API_URL}/character.json`, newCharacter)
             .then(response => {
                 console.log('Character added successfully:', response.data);
                 fetchCharacters();
