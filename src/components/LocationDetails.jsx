@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import './LocationList.css'
-import { useParams, Navigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import './LocationDetails.css'
+import { useParams, Navigate, useNavigate } from 'react-router-dom'
 import CharacterList from './characterlist'
-import LocationList from './LocationList'
-
 
 const LocationDetails = ({ locations, setAppCharacters }) => {
     const { id } = useParams();
     const [characters, setCharacters] = useState([]);
+    const navigate = useNavigate();
     
     useEffect(() => {
         console.log('Locations in details:', locations);
@@ -45,31 +43,35 @@ const LocationDetails = ({ locations, setAppCharacters }) => {
     }
 
     return (
-        <div className="location-details">
-            <h1>Location Details</h1>
-            <div className="location-card">
-                
-                <div className="location-info">
-                    <h2 className="location-name">{location.name}</h2>
-                    <div className="location-status">
-                       
-                        <span>{location.type}</span>
-                    </div>
-                    <p className="location-dimension">{location.dimension}</p>
-                    {location.residents && (
-                        <p className="location-residents">Residents: {location.residents.length}</p>
-                    )}
-                </div>
-
-                
+        <div className="location-details-page">
+            <div className="location-details-portal location-details-portal-1"></div>
+            <div className="location-details-portal location-details-portal-2"></div>
             
+            <div className="location-details-container">
+                <div className="location-details-card">
+                    <div className="location-details-info">
+                        <h1 className="location-details-title">{location.name}</h1>
+                        <div className="location-details-type">
+                            <span>{location.type}</span>
+                        </div>
+                        <p className="location-details-dimension">Dimension: {location.dimension}</p>
+                        {location.residents && (
+                            <p className="location-details-residents">
+                                Number of Residents: {location.residents.length}
+                            </p>
+                        )}
+                        <button 
+                            onClick={() => navigate(-1)} 
+                            className="location-details-back"
+                        >
+                            ← Back
+                        </button>
+                    </div>
+                </div>
+                <CharacterList characters={characters} />
             </div>
-            <CharacterList characters={characters} />
-
         </div>
     )
-
-
 }
 
 export default LocationDetails

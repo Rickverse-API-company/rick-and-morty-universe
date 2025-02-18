@@ -141,3 +141,17 @@
     font-size: 1rem;
   }
 }
+
+.back-button {
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  border: none;
+  background: #3c3e44;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: var(--primary-color);
+}
