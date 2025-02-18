@@ -82,12 +82,8 @@ function HomePage({ characters = [], setCharacters, location = [], setLocation }
     };
 
     useEffect(() => {
-        if (characters.length === 0) {
-            fetchCharacters();
-        } else {
-            setCharactersLoading(false);
-        }
-    }, [characters.length]);
+        fetchCharacters();
+    }, []);
 
     useEffect(() => {
         if (!location || location.length === 0) {
