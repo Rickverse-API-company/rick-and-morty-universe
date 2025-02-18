@@ -1,89 +1,91 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Search from '../components/Search';
 import CharacterList from '../components/characterlist'
-import CharacterDetails from '../components/characterdetails'
 import AddCharacterForm from '../components/addcharacterform'
 import HeroSection from '../components/HeroSection'
 import './homepage.css'
 import { API_URL } from "../config/api";
 
-
-
-function HomePage() {
-
-    const [CharacterToDisplay, setCharacterToDisplay] = useState([]);
+function HomePage({ characters, setCharacters }) {
     const [searchTerm, setSearchTerm] = useState("");
+    const [loading, setLoading] = useState(true);
 
     const fetchCharacters = () => {
+        setLoading(true);
         axios.get(`${API_URL}/character.json`)
             .then(response => {
                 const characterObj = response.data;
-                const charactersArr = Object.keys(characterObj)
-                    .filter(id => characterObj[id] !== null)
-                    .map((id) => ({
-                        id,
-                        ...characterObj[id],
-                        isDeleted: characterObj[id].isDeleted ?? false,
+                if (!characterObj) {
+                    console.log('No character data received');
+                    setCharacters([]);
+                    return;
+                }
+                
+                const charactersArr = Object.entries(characterObj)
+                    .filter(([_, char]) => char !== null)
+                    .map(([id, char]) => ({
+                        ...char,
+                        id: id.toString(),
+                        isDeleted: char.isDeleted ?? false,
                     }));
-                setCharacterToDisplay(charactersArr);
-                console.log(charactersArr)
+                
+                console.log('Fetched characters:', charactersArr);
+                setCharacters(charactersArr);
             })
             .catch((error) => {
-                console.log("error Page")
+                console.error("Error fetching characters:", error);
+                setCharacters([]);
             })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     useEffect(() => {
-        fetchCharacters();
-    }, [])
+        if (characters.length === 0) {
+            fetchCharacters();
+        } else {
+            setLoading(false);
+        }
+    }, [characters.length]);
 
-    if (CharacterToDisplay === null) {
-        console.log("...loading")
+    if (loading) {
+        return <div>Loading...</div>;
     }
-    const filteredCharacters = CharacterToDisplay.filter((character) =>
-    character &&
-    character.name &&
-    !character.isDeleted &&
-    character.name.toLowerCase().includes(searchTerm.toLowerCase())
+
+    const filteredCharacters = characters.filter((character) =>
+        character &&
+        character.name &&
+        !character.isDeleted &&
+        character.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // const onDelete = (id) => {
-    //     axios.delete(`${API_URL}/character/${id}.json`)
-    //         .then(response => {
-    //             console.log('Character deleted successfully:', response.data)
-    //             fetchCharacters();
-    //         })
-    //         .catch(error => {
-    //             console.error('Error deleting character:', error)
-    //         })
-    // }
     const softDeleteCharacter = (id) => {
-        const character = CharacterToDisplay.find(char => char.id === id);
+        const character = characters.find(char => char.id === id);
         if (character && character.canDelete === false) {
-            console.log("Cant be deleted");
+            console.log("Can't be deleted");
             return;
         }
         axios.patch(`${API_URL}/character/${id}.json`, { isDeleted: true })
             .then(response => {
-                console.log('Mark as deleted', response.data);
-                setCharacterToDisplay(prevState =>
+                console.log('Marked as deleted', response.data);
+                setCharacters(prevState =>
                     prevState.map(element =>
-                    element.id === id ? { ...element, isDeleted: true } : element
+                        element.id === id ? { ...element, isDeleted: true } : element
                     )
                 );
             })
             .catch(error => {
-                console.error('Error al marcar como eliminado:', error);
+                console.error('Error marking as deleted:', error);
             });
     };
 
     const createCharacter = (characterDetails) => {
         const placeholderImage = 'https://rickandmortyapi.com/api/character/avatar/19.jpeg';
-    const finalImage = characterDetails.image.trim() !== '' ? characterDetails.image : placeholderImage;
+        const finalImage = characterDetails.image.trim() !== '' ? characterDetails.image : placeholderImage;
 
-        const characterIds = CharacterToDisplay.map((character) =>
+        const characterIds = characters.map((character) =>
             parseInt(character.id)
         );
         const maxId = characterIds.length > 0 ? Math.max(...characterIds) : 0;
@@ -93,7 +95,7 @@ function HomePage() {
             ...characterDetails,
             id: nextId.toString(),
             canDelete: true,
-            image: finalImage 
+            image: finalImage
         };
 
         return axios.post(`${API_URL}/character.json`, newCharacter)
@@ -110,15 +112,11 @@ function HomePage() {
 
     return (
         <main className="HomePage">
-
-            
-
             <div id="homepage-hero-section">
                 <HeroSection />
             </div>
 
             <div className="search-section">
-               
                 <Search setSearchTerm={setSearchTerm} />
             </div>
 
@@ -127,10 +125,8 @@ function HomePage() {
                 <CharacterList characters={filteredCharacters} onDelete={softDeleteCharacter} />
             </div>
 
-           
-
             <div className="add-character">
-            <AddCharacterForm onCharacterAdded={createCharacter} />
+                <AddCharacterForm onCharacterAdded={createCharacter} />
             </div>
         </main>
     )
