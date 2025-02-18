@@ -25,6 +25,7 @@ function HomePage() {
                     .map((id) => ({
                         id,
                         ...characterObj[id],
+                        isDeleted: characterObj[id].isDeleted ?? false,
                     }));
                 setCharacterToDisplay(charactersArr);
                 console.log(charactersArr)
@@ -42,9 +43,10 @@ function HomePage() {
         console.log("...loading")
     }
     const filteredCharacters = CharacterToDisplay.filter((character) =>
-        character && character.name
-            ? character.name.toLowerCase().includes(searchTerm.toLowerCase())
-            : false
+    character &&
+    character.name &&
+    !character.isDeleted &&
+    character.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     // const onDelete = (id) => {
@@ -59,14 +61,18 @@ function HomePage() {
     // }
     const softDeleteCharacter = (id) => {
         const character = CharacterToDisplay.find(char => char.id === id);
-        if (!character?.canDelete) {
+        if (character && character.canDelete === false) {
             console.log("Cant be deleted");
             return;
         }
         axios.patch(`${API_URL}/character/${id}.json`, { isDeleted: true })
             .then(response => {
                 console.log('Mark as deleted', response.data);
-
+                setCharacterToDisplay(prevState =>
+                    prevState.map(element =>
+                    element.id === id ? { ...element, isDeleted: true } : element
+                    )
+                );
             })
             .catch(error => {
                 console.error('Error al marcar como eliminado:', error);
