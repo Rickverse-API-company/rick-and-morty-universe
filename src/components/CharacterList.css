@@ -1,15 +1,27 @@
 .character-list {
   padding: 2rem 0;
+  position: relative;
+}
+
+.carousel-container {
+  position: relative;
 }
 
 .character-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
   padding: 1rem;
+  scrollbar-width: none;
+}
+.character-grid::-webkit-scrollbar {
+  display: none; 
 }
 
 .character-card {
+  flex: 0 0 auto;
+  width: 280px;
   background: var(--card-background);
   border-radius: 12px;
   overflow: hidden;
@@ -65,21 +77,37 @@
   background-color: #808080;
 }
 
-.character-species {
+.character-species,
+.character-location {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
 
-.character-location {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: #fff;
+  padding: 1rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.carousel-button.left {
+  left: 0;
+}
+
+.carousel-button.right {
+  right: 0;
 }
 
 @media (max-width: 768px) {
-  .character-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
+  .character-card {
+    width: 240px;
   }
 
   .character-image {
@@ -93,4 +121,4 @@
   .character-name {
     font-size: 1.25rem;
   }
-} 
+}
