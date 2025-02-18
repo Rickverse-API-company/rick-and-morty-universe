@@ -80,6 +80,9 @@ function HomePage() {
     };
 
     const createCharacter = (characterDetails) => {
+        const placeholderImage = 'https://rickandmortyapi.com/api/character/avatar/19.jpeg';
+    const finalImage = characterDetails.image.trim() !== '' ? characterDetails.image : placeholderImage;
+
         const characterIds = CharacterToDisplay.map((character) =>
             parseInt(character.id)
         );
@@ -89,7 +92,8 @@ function HomePage() {
         const newCharacter = {
             ...characterDetails,
             id: nextId.toString(),
-            canDelete: true
+            canDelete: true,
+            image: finalImage 
         };
 
         return axios.post(`${API_URL}/character.json`, newCharacter)
