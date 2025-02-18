@@ -3,6 +3,7 @@
   background-color: var(--background-dark);
   position: relative;
   overflow: hidden;
+  margin-top: 100px;
 }
 
 .details-container {

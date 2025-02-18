@@ -51,7 +51,9 @@ function HomePage({ characters = [], setCharacters, location = [], setLocation }
                 const locationObj = response.data;
                 if (!locationObj) {
                     console.log('No location data received');
-                    setLocation([]);
+                    if (typeof setLocation === 'function') {
+                        setLocation([]);
+                    }
                     return;
                 }
                 
@@ -64,11 +66,15 @@ function HomePage({ characters = [], setCharacters, location = [], setLocation }
                     }));
                 
                 console.log('Fetched locations:', locationArr);
-                setLocation(locationArr);
+                if (typeof setLocation === 'function') {
+                    setLocation(locationArr);
+                }
             })
             .catch((error) => {
                 console.error("Error fetching locations:", error);
-                
+                if (typeof setLocation === 'function') {
+                    setLocation([]);
+                }
             })
             .finally(() => {
                 setLocationsLoading(false);
@@ -166,13 +172,16 @@ function HomePage({ characters = [], setCharacters, location = [], setLocation }
                 <CharacterList characters={filteredCharacters} onDelete={softDeleteCharacter} />
             </div>
 
-            <div className="location-list">
-                <LocationList locations={location} setLocation={setLocation} />
-            </div>
-
             <div className="add-character">
                 <AddCharacterForm onCharacterAdded={createCharacter} />
             </div>
+
+            <div className="location-list">
+                <h2>Locations</h2>
+                <LocationList locations={location} setLocation={setLocation} />
+            </div>
+
+            
 
             
         </main>
