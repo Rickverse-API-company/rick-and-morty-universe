@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import './CharacterList.css'
+import './CharacterDetails.css'
 import { useParams, Navigate } from 'react-router-dom'
+import { FaHeartbeat, FaUserAlt, FaGlobe, FaRocket, FaTv } from 'react-icons/fa'
 
 const CharacterDetails = ({ characters }) => {
     const { id } = useParams();
@@ -24,24 +25,45 @@ const CharacterDetails = ({ characters }) => {
 
     return (
         <div className="character-details">
-            <h1>Character Details</h1>
-            <div className="character-card">
+            <div className="portal-effect portal-effect-1"></div>
+            <div className="portal-effect portal-effect-2"></div>
+            
+            <div className="details-container">
+                <div className="details-content">
+                    <h1 className="details-title">{character.name}</h1>
+                    <p className="details-description">
+                        A fascinating character from the Rick and Morty universe, {character.name} is a {character.species} who has appeared in {character.episode.length} episodes.
+                    </p>
+                    
+                    <ul className="abilities-list">
+                        <li className="ability-item">
+                            <FaHeartbeat className="ability-icon" />
+                            <span className="ability-text">Status: {character.status}</span>
+                        </li>
+                        <li className="ability-item">
+                            <FaUserAlt className="ability-icon" />
+                            <span className="ability-text">Species: {character.species} - {character.gender}</span>
+                        </li>
+                        <li className="ability-item">
+                            <FaGlobe className="ability-icon" />
+                            <span className="ability-text">Current Location: {character.location.name}</span>
+                        </li>
+                        <li className="ability-item">
+                            <FaRocket className="ability-icon" />
+                            <span className="ability-text">Origin: {character.origin.name}</span>
+                        </li>
+                        <li className="ability-item">
+                            <FaTv className="ability-icon" />
+                            <span className="ability-text">Featured in {character.episode.length} episodes</span>
+                        </li>
+                    </ul>
+                </div>
+                
                 <img
                     src={character.image}
                     alt={character.name}
-                    className="character-image"
+                    className="details-image"
                 />
-                <div className="character-info">
-                    <h2 className="character-name">{character.name}</h2>
-                    <div className="character-status">
-                        <span className={`status-indicator status-${character.status?.toLowerCase() || 'unknown'}`}></span>
-                        <span>{character.status}</span>
-                    </div>
-                    <p className="character-species">{character.species}</p>
-                    {character.location && (
-                        <p className="character-location">Location: {character.location.name}</p>
-                    )}
-                </div>
             </div>
         </div>
     )
