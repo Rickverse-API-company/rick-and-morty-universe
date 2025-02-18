@@ -1,13 +1,26 @@
 import React from 'react'
 import './CharacterList.css'
+import { useNavigate } from 'react-router-dom'
 
 const CharacterList = ({ characters, onDelete }) => {
+    const navigate = useNavigate()
     return (
         <div className="character-list">
             <div className="character-grid">
                 {characters.length > 0 ? (
                     characters.map((characterDetail) => (
-                        <div key={characterDetail.id} className="character-card">
+                        <div 
+                            key={characterDetail.id} 
+                            className="character-card"
+                            onClick={(event) => {
+                                if (event.target.tagName !== 'BUTTON') {
+                                    navigate(`/character/${characterDetail.id}`)
+                                    
+                                        
+                                }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                        >
                             <img
                                 src={characterDetail.image}
                                 alt={characterDetail.id}
