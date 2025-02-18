@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom'
 
 const CharacterList = ({ characters, onDelete }) => {
     const navigate = useNavigate()
+    
+    const handleCharacterClick = (characterDetail) => {
+        console.log('Clicked character:', characterDetail);
+        navigate(`/character/${characterDetail.id}`);
+    };
+
     return (
         <div className="character-list">
             <div className="character-grid">
@@ -14,9 +20,7 @@ const CharacterList = ({ characters, onDelete }) => {
                             className="character-card"
                             onClick={(event) => {
                                 if (event.target.tagName !== 'BUTTON') {
-                                    navigate(`/character/${characterDetail.id}`)
-                                    
-                                        
+                                    handleCharacterClick(characterDetail);
                                 }
                             }}
                             style={{ cursor: 'pointer' }}
@@ -38,7 +42,12 @@ const CharacterList = ({ characters, onDelete }) => {
                                 )}
                                 {/* <button onClick={() => onDelete(characterDetail.id)}>Delete Character</button> */}
                                 {characterDetail.canDelete && (
-                                    <button onClick={() => onDelete(characterDetail.id)}>
+                                    <button 
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onDelete(characterDetail.id);
+                                        }}
+                                    >
                                         Delete Character
                                     </button>
                                 )}
