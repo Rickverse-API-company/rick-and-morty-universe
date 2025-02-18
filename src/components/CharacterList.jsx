@@ -8,9 +8,9 @@ const CharacterList = ({ characters, onDelete }) => {
                 {characters.length > 0 ? (
                     characters.map((characterDetail) => (
                         <div key={characterDetail.id} className="character-card">
-                            <img 
-                                src={characterDetail.image} 
-                                alt={characterDetail.name} 
+                            <img
+                                src={characterDetail.image}
+                                alt={characterDetail.name}
                                 className="character-image"
                             />
                             <div className="character-info">
@@ -23,7 +23,12 @@ const CharacterList = ({ characters, onDelete }) => {
                                 {characterDetail.location && (
                                     <p className="character-location">Location: {characterDetail.location.name}</p>
                                 )}
-                                <button onClick={() => onDelete(characterDetail.id)}>Delete Character</button>
+                                {/* <button onClick={() => onDelete(characterDetail.id)}>Delete Character</button> */}
+                                {characterDetail.canDelete && (
+                                    <button onClick={() => onDelete(characterDetail.id)}>
+                                        Delete Character
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ))
