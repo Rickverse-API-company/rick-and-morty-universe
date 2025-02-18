@@ -1,74 +1,66 @@
-import React, { useEffect } from 'react'
-import './CharacterDetails.css'
-import { useParams, Navigate } from 'react-router-dom'
-import { FaHeartbeat, FaUserAlt, FaGlobe, FaRocket, FaTv } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { API_URL } from '../config/api';
+import './CharacterList.css';
 
-const CharacterDetails = ({ characters }) => {
+const CharacterDetails = () => {
     const { id } = useParams();
-    
-    useEffect(() => {
-        console.log('Characters in details:', characters);
-        console.log('Looking for ID:', id);
-        console.log('Available IDs:', characters.map(char => char.id));
-    }, [characters, id]);
+    const [character, setCharacter] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    // Ensure both IDs are strings when comparing
-    const character = characters.find(char => 
-        char.id.toString() === id.toString() && !char.isDeleted
-    );
-    
-    console.log('Found character:', character);
+    useEffect(() => {
+
+        axios
+            .get(`${API_URL}/character/${id}.json`)
+            .then(response => {
+                const data = response.data;
+                if (data) {
+
+                    setCharacter({ id, ...data });
+                }
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching character:", error);
+                setLoading(false);
+            });
+    }, [id]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     if (!character) {
+        console.log("this character doesnt exist")
         return <Navigate to="/" replace />;
     }
 
     return (
         <div className="character-details">
-            <div className="portal-effect portal-effect-1"></div>
-            <div className="portal-effect portal-effect-2"></div>
-            
-            <div className="details-container">
-                <div className="details-content">
-                    <h1 className="details-title">{character.name}</h1>
-                    <p className="details-description">
-                        A fascinating character from the Rick and Morty universe, {character.name} is a {character.species} who has appeared in {character.episode.length} episodes.
-                    </p>
-                    
-                    <ul className="abilities-list">
-                        <li className="ability-item">
-                            <FaHeartbeat className="ability-icon" />
-                            <span className="ability-text">Status: {character.status}</span>
-                        </li>
-                        <li className="ability-item">
-                            <FaUserAlt className="ability-icon" />
-                            <span className="ability-text">Species: {character.species} - {character.gender}</span>
-                        </li>
-                        <li className="ability-item">
-                            <FaGlobe className="ability-icon" />
-                            <span className="ability-text">Current Location: {character.location.name}</span>
-                        </li>
-                        <li className="ability-item">
-                            <FaRocket className="ability-icon" />
-                            <span className="ability-text">Origin: {character.origin.name}</span>
-                        </li>
-                        <li className="ability-item">
-                            <FaTv className="ability-icon" />
-                            <span className="ability-text">Featured in {character.episode.length} episodes</span>
-                        </li>
-                    </ul>
-                </div>
-                
+            <h1>Character Details</h1>
+            <div className="character-card">
                 <img
-                    src={character.image}
+                    src={character.image || 'https://via.placeholder.com/150'}
                     alt={character.name}
-                    className="details-image"
+                    className="character-image"
                 />
+                <div className="character-info">
+                    <h2 className="character-name">{character.name}</h2>
+                    <div className="character-status">
+                        <span
+                            className={`status-indicator status-${character.status?.toLowerCase() || 'unknown'}`}
+                        ></span>
+                        <span>{character.status}</span>
+                    </div>
+                    <p className="character-species">{character.species}</p>
+                    {character.location && (
+                        <p className="character-location">Location: {character.location.name}</p>
+                    )}
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CharacterDetails
-
-
+export default CharacterDetails;
