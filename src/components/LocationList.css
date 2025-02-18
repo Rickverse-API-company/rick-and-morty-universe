@@ -1,96 +1,94 @@
 .location-list {
-    padding: 2rem 0;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+.location-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding: 1rem;
+  scrollbar-width: none; 
+}
+.location-grid::-webkit-scrollbar {
+  display: none; 
+}
+
+.location-card {
+  flex: 0 0 auto; 
+  width: 280px;
+  background: var(--card-background);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.location-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(151, 206, 76, 0.2);
+}
+
+.location-info {
+  padding: 1.5rem;
+}
+
+.location-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.location-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.location-type,
+.location-dimension {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: #fff;
+  padding: 1rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.carousel-button.left {
+  left: 0;
+}
+
+.carousel-button.right {
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .location-card {
+    width: 240px;
   }
-  
-  .location-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+
+  .location-info {
     padding: 1rem;
   }
-  
-  .location-card {
-    background: var(--card-background);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-  }
-  
-  .location-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(151, 206, 76, 0.2);
-  }
-  
-  .location-image {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    border-bottom: 2px solid var(--primary-color);
-  }
-  
-  .location-info {
-    padding: 1.5rem;
-  }
-  
+
   .location-name {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
+    font-size: 1.25rem;
   }
-  
-  .location-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .status-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-  
-  .status-alive {
-    background-color: var(--primary-color);
-  }
-  
-  .status-dead {
-    background-color: #ff5757;
-  }
-  
-  .status-unknown {
-    background-color: #808080;
-  }
-  
-  .location-type {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .location-dimension {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-  }
-  
-  @media (max-width: 768px) {
-    .location-grid {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1rem;
-    }
-  
-    .location-image {
-      height: 240px;
-    }
-  
-    .location-info {
-      padding: 1rem;
-    }
-  
-    .location-name {
-      font-size: 1.25rem;
-    }
-  } 
+}
