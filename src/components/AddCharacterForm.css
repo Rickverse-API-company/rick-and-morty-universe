@@ -1,6 +1,5 @@
 .add-character-section {
   padding: 4rem 0;
-  background-color: var(--background-dark);
   position: relative;
   overflow: hidden;
 }
@@ -128,10 +127,7 @@
   pointer-events: none;
 }
 
-.portal-top-right {
-  top: -150px;
-  right: -150px;
-}
+
 
 .portal-bottom-left {
   bottom: -150px;
