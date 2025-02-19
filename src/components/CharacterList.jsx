@@ -1,25 +1,63 @@
 import React, { useRef } from 'react';
 import './CharacterList.css'
 import { useNavigate } from 'react-router-dom'
+import { rickifyCharacter } from '../services/openai';
 
-
-const CharacterList = ({ characters, onDelete }) => {
+const CharacterList = ({ characters, onDelete, onUpdate }) => {
     const navigate = useNavigate()
     const carouselRef = useRef(null);
 
     const handleCharacterClick = (characterDetail) => {
         navigate(`/character/${characterDetail.id}`);
     };
-    const scrollLeft = () => {
-        if (carouselRef.current) {
-        carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+
+    const handleRickify = async (e, characterDetail) => {
+        e.stopPropagation();
+        const button = e.target;
+        const originalText = button.textContent;
+        
+        try {
+            // Disable button and show loading state
+            button.disabled = true;
+            button.textContent = 'Rickifying...';
+            
+            // Get rickified character from OpenAI
+            const rickifiedCharacter = await rickifyCharacter(characterDetail);
+            
+            // Update the character in the database
+            if (onUpdate) {
+                await onUpdate(characterDetail.id, rickifiedCharacter);
+            }
+            
+            // Show success state briefly
+            button.textContent = 'Rickified!';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 2000);
+        } catch (error) {
+            console.error('Failed to rickify character:', error);
+            // Show error message to user
+            alert(error.message || 'Failed to rickify character. Please try again later.');
+            
+            // Reset button state
+            button.textContent = originalText;
+            button.disabled = false;
         }
     };
+
+    const scrollLeft = () => {
+        if (carouselRef.current) {
+            carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+        }
+    };
+
     const scrollRight = () => {
         if (carouselRef.current) {
             carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
         }
     };
+
     return (
         <div className="character-list">
             <div className="carousel-container">
@@ -55,14 +93,21 @@ const CharacterList = ({ characters, onDelete }) => {
                                         <p className="character-location">Location: {characterDetail.location.name}</p>
                                     )}
                                     {characterDetail.canDelete && (
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onDelete(characterDetail.id);
-                                            }}
-                                        >
-                                            Delete Character
-                                        </button>
+                                        <>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onDelete(characterDetail.id);
+                                                }}
+                                            >
+                                                Delete Character
+                                            </button>
+                                            <button
+                                                onClick={(e) => handleRickify(e, characterDetail)}
+                                            >
+                                                Rickify Character
+                                            </button>
+                                        </>
                                     )}
                                 </div>
                             </div>
