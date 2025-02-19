@@ -86,6 +86,15 @@
     pointer-events: none;
     animation: fall 3s linear forwards;
 }
+.nav-user{
+display: flex;
+align-items: center;
+flex-direction: row-reverse;
+}
+.nav-user-name{
+    margin: 0.5rem;
+    margin-left: 35px;
+}
 
 @keyframes fall {
     0% {

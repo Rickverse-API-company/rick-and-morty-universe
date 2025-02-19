@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+    signInWithEmailAndPassword,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence
+} from 'firebase/auth';
 import { auth } from '../config/FirebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import GitHubLogin from './GitHubLogin';
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
+
+        const persistence = rememberMe ? browserLocalPersistence : browserSessionPersistence;
+        setPersistence(auth, persistence)
+            .then(() => signInWithEmailAndPassword(auth, email, password))
             .then((userCredential) => {
                 console.log('User Logged:', userCredential.user);
                 navigate('/');
@@ -23,9 +34,9 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className="login-container">
             <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="login-form">
                 <input
                     type="email"
                     placeholder="Email"
@@ -40,9 +51,19 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                    />
+                    Remember Me
+                </label>
                 <button type="submit">Login</button>
-                {error && <p>asdsada</p>}
+                {error && <p className="error">{error}</p>}
             </form>
+            <br/>
+            <GitHubLogin />
         </div>
     );
 };

@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    updateProfile,
+    GithubAuthProvider,
+    signInWithPopup
+} from 'firebase/auth';
 import { auth } from '../config/FirebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,10 +34,23 @@ const Register = () => {
             });
     };
 
+    const handleGitHubRegister = () => {
+        const provider = new GithubAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log('GitHub user registered:', result.user);
+                navigate('/');
+            })
+            .catch((err) => {
+                console.error('Error during GitHub registration:', err);
+                setError(err.message);
+            });
+    };
+
     return (
-        <div>
+        <div className='login-container'>
             <h1>Register</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='login-form'>
                 <input
                     type="text"
                     placeholder="Name (optional)"
@@ -54,8 +72,10 @@ const Register = () => {
                     required
                 />
                 <button type="submit">Register</button>
-                {error && <p>{error}</p>}
+                {error && <p className="error">{error}</p>}
             </form>
+            <br/>
+            <button onClick={handleGitHubRegister}>Register with GitHub</button>
         </div>
     );
 };

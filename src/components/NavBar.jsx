@@ -78,7 +78,7 @@ function NavBar() {
                     
                     {currentUser ? (
                         <div className="nav-user">
-                            <span className="nav-user-name">Welcome, {currentUser.email}</span>
+                            <span className="nav-user-name"><h4>{currentUser.displayName || currentUser.email}</h4></span>
                             <button onClick={handleLogout} className="nav-link">Logout</button>
                         </div>
                     ) : (
