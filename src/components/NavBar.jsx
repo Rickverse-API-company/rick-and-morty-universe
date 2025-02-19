@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 import pickle from '../assets/pickle.png';
+import { useAuth } from './AuthContext';
 
 function NavBar() {
     const [isRaining, setIsRaining] = useState(false);
     const pickleContainerRef = useRef(null);
+    const { currentUser, logout } = useAuth();
 
     useEffect(() => {
         // Create pickle container on mount
@@ -50,13 +52,21 @@ function NavBar() {
             const rainInterval = setInterval(createPickle, 200);
             return () => {
                 clearInterval(rainInterval);
-                // Clean up any remaining pickles when rain stops
                 if (pickleContainerRef.current) {
                     pickleContainerRef.current.innerHTML = '';
                 }
             };
         }
     }, [isRaining]);
+
+    // Handle user logout
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } catch (err) {
+            console.error("Error logging out:", err);
+        }
+    };
 
     return (
         <nav className="navbar">
@@ -65,6 +75,18 @@ function NavBar() {
                 <div className="nav-links">
                     <Link to="/about" className="nav-link">About</Link>
                     <button onClick={startPickleRain} className="nav-link pickle-btn">Pickles</button>
+                    
+                    {currentUser ? (
+                        <div className="nav-user">
+                            <span className="nav-user-name">Welcome, {currentUser.email}</span>
+                            <button onClick={handleLogout} className="nav-link">Logout</button>
+                        </div>
+                    ) : (
+                        <>
+                            <Link to="/login" className="nav-link">Login</Link>
+                            <Link to="/register" className="nav-link">Register</Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
