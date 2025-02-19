@@ -153,6 +153,34 @@ function HomePage({ characters = [], setCharacters, location = [], setLocation }
             });
     };
 
+    const updateCharacter = async (id, updatedCharacter) => {
+        try {
+            // Preserve the id and canDelete status from the original character
+            const character = characters.find(char => char.id === id);
+            const finalCharacter = {
+                ...updatedCharacter,
+                id: id,
+                canDelete: character.canDelete,
+                isDeleted: false
+            };
+
+            await axios.put(`${API_URL}/character/${id}.json`, finalCharacter);
+            console.log('Character updated successfully');
+            
+            // Update the local state
+            setCharacters(prevState =>
+                prevState.map(char =>
+                    char.id === id ? finalCharacter : char
+                )
+            );
+            
+            return finalCharacter;
+        } catch (error) {
+            console.error('Error updating character:', error);
+            throw error;
+        }
+    };
+
     return (
         <main className="HomePage">
             <div id="homepage-hero-section">
@@ -165,7 +193,11 @@ function HomePage({ characters = [], setCharacters, location = [], setLocation }
 
             <div className="character-list">
                 <h2>Featured Characters</h2>
-                <CharacterList characters={filteredCharacters} onDelete={softDeleteCharacter} />
+                <CharacterList 
+                    characters={filteredCharacters} 
+                    onDelete={softDeleteCharacter} 
+                    onUpdate={updateCharacter}
+                />
             </div>
 
             <div className="add-character">
