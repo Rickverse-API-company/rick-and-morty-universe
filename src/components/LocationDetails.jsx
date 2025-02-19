@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './LocationDetails.css'
 import { useParams, Navigate, useNavigate } from 'react-router-dom'
-import CharacterList from './characterlist'
+import CharacterList from './CharacterList'
 
 const LocationDetails = ({ locations, setAppCharacters }) => {
     const { id } = useParams();

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import Search from '../components/Search';
-import CharacterList from '../components/characterlist'
-import AddCharacterForm from '../components/addcharacterform'
+import CharacterList from '../components/CharacterList'
+import AddCharacterForm from '../components/AddCharacterForm'
 import HeroSection from '../components/HeroSection'
 import LocationList from '../components/LocationList'
-import './homepage.css'
+import './Homepage.css'
 import { API_URL } from "../config/api";
 
 function HomePage({ characters = [], setCharacters, location = [], setLocation }) {
