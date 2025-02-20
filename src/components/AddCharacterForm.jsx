@@ -6,6 +6,7 @@ function AddCharacterForm({ onCharacterAdded }) {
     const [name, setName] = useState('')
     const [species, setSpecies] = useState('')
     const [image, setImage] = useState('')
+    const [status, setStatus] = useState('')
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
@@ -13,7 +14,8 @@ function AddCharacterForm({ onCharacterAdded }) {
         const newCharacter = {
             name,
             species,
-            image
+            image,
+            status: "Alive"
         }
         
         onCharacterAdded(newCharacter)
@@ -21,6 +23,7 @@ function AddCharacterForm({ onCharacterAdded }) {
                 setName('');
                 setSpecies('');
                 setImage('');
+                setStatus('');
                 navigate('/')
             })
             .catch(error => {
