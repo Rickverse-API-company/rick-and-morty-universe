@@ -118,14 +118,3 @@ input:focus, textarea:focus {
   transform: translateY(-4px);
 }
 
-/* Login.css & register.css */
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 75vh;
-}
-.login-form{
-  display: grid;
-}
