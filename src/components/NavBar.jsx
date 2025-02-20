@@ -6,6 +6,7 @@ import { useAuth } from './AuthContext';
 
 function NavBar() {
     const [isRaining, setIsRaining] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pickleContainerRef = useRef(null);
     const { currentUser, logout } = useAuth();
 
@@ -68,23 +69,38 @@ function NavBar() {
         }
     };
 
+    // Handle mobile menu toggle
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    // Close mobile menu when clicking a link
+    const handleLinkClick = () => {
+        setIsMobileMenuOpen(false);
+    };
+
     return (
         <nav className="navbar">
             <div className="navbar-content">
-                <Link to="/" className="site-title">Rick and Morty Universe</Link>
-                <div className="nav-links">
-                    <Link to="/about" className="nav-link">About</Link>
-                    <button onClick={startPickleRain} className="nav-link pickle-btn">Pickles</button>
+                <Link to="/" className="site-title" onClick={handleLinkClick}>Rick and Morty Universe</Link>
+                <button className="hamburger" onClick={toggleMobileMenu}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
+                    <Link to="/about" className="nav-link" onClick={handleLinkClick}>About</Link>
+                    <button onClick={() => { startPickleRain(); handleLinkClick(); }} className="nav-link pickle-btn">Pickles</button>
                     
                     {currentUser ? (
                         <div className="nav-user">
                             <span className="nav-user-name"><h4>{currentUser.displayName || currentUser.email}</h4></span>
-                            <button onClick={handleLogout} className="nav-link">Logout</button>
+                            <button onClick={() => { handleLogout(); handleLinkClick(); }} className="nav-link">Logout</button>
                         </div>
                     ) : (
                         <>
-                            <Link to="/login" className="nav-link">Login</Link>
-                            <Link to="/register" className="nav-link">Register</Link>
+                            <Link to="/login" className="nav-link" onClick={handleLinkClick}>Login</Link>
+                            <Link to="/register" className="nav-link" onClick={handleLinkClick}>Register</Link>
                         </>
                     )}
                 </div>
