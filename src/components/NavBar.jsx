@@ -73,7 +73,7 @@ function NavBar() {
             <div className="navbar-content">
                 <Link to="/" className="site-title">Rick and Morty Universe</Link>
                 <div className="nav-links">
-                    <Link to="/about" className="nav-link">About</Link>
+                    <Link to="/About" className="nav-link">About</Link>
                     <button onClick={startPickleRain} className="nav-link pickle-btn">Pickles</button>
                     
                     {currentUser ? (
