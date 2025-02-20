@@ -1,4 +1,6 @@
 import React from 'react'
+import davidMorty from '../assets/david-morty.jpg'; 
+import GeorgeRick from "../assets/george-rick.jpg";
 import './About.css'
 
 const About = () => {
@@ -6,7 +8,7 @@ const About = () => {
         <div className="about-container">
             <h1>Our Universe</h1>
             <div className="about-person">
-                <img src="../src/assets/david-morty.jpg" alt="David" />
+                <img src={davidMorty} alt="David" />
                 <div>
                     <h2>David</h2>
                     <p>Hey Mortys! My name is David, and I’m an Argentine traveler.
@@ -18,7 +20,7 @@ const About = () => {
                 </div>
             </div>
             <div className="about-person">
-                <img src="../src/assets/george-rick.jpg" alt="George" />
+                <img src={GeorgeRick} alt="George" />
                 <div>
                     <h2>George</h2>
                     <p>Howdy friends, George here, 30-ish (for the past couple of years). 
