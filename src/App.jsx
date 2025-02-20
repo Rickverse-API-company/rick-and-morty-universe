@@ -17,18 +17,37 @@ function App() {
 
   return (
     <>
-    <AuthProvider>
-      <Navbar />
-      <Routes>
-        <Route path='/Login' element={<Login/>}/>
-        <Route path='/Register' element={<Register />} />
-        <Route path="/" element={<HomePage characters={characters} setCharacters={setCharacters} location={location} setLocation={setLocation} />} />
-        <Route path="/character/:id" element={<CharacterDetails characters={characters} />} />
-        <Route path="/location/:id" element={<LocationDetails locations={location} setAppCharacters={setCharacters} />} />
-        <Route path="*" element={<h1>Page not found</h1>} />
-        <Route path="/About" element={<About/>}/>
-      </Routes>
-      <Footer />
+      <AuthProvider>
+        <Navbar />
+        <Routes>
+          <Route path='/Login' element={<Login />} />
+          <Route path='/Register' element={<Register />} />
+          <Route path="/" element={<HomePage characters={characters}
+            setCharacters={setCharacters}
+            location={location}
+            setLocation={setLocation} />} />
+          <Route path="/character/:id" element={<CharacterDetails characters={characters} />} />
+          <Route path="/location/:id"
+            element={<LocationDetails locations={location}
+              setAppCharacters={setCharacters} />} />
+          <Route
+            path="*"
+            element={
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '75vh'
+                }}
+              >
+                <h1>Page not found</h1>
+              </div>
+            }
+          />
+          <Route path="/About" element={<About />} />
+        </Routes>
+        <Footer />
       </AuthProvider>
     </>
   )
