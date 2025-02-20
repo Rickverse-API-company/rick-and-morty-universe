@@ -69,7 +69,15 @@ export const rickifyCharacter = async (character) => {
         // Extract the JSON response from the message content
         const rickifiedCharacter = JSON.parse(response.data.choices[0].message.content);
         console.log('Parsed rickified character:', rickifiedCharacter);
-        return rickifiedCharacter;
+        
+        // Preserve the original image
+        const finalCharacter = {
+            ...rickifiedCharacter,
+            image: character.image // Keep the original image
+        };
+        
+        console.log('Final character with preserved image:', finalCharacter);
+        return finalCharacter;
     } catch (error) {
         console.log('Detailed error information:', {
             error: error,

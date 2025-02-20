@@ -16,9 +16,7 @@ const Search = ({ setSearchTerm }) => {
           placeholder="Search characters..."
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit" className="search-button" aria-label="Search">
-          <FaSearch className="search-icon" style={{ width: '24px', height: '24px' }} />
-        </button>
+        
       </form>
     </div>
   )
