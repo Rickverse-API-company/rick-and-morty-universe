@@ -43,6 +43,7 @@
 
 .character-info {
   padding: 1.5rem;
+  padding-bottom: 80px; /* Make space for buttons */
 }
 
 .character-name {
@@ -84,6 +85,56 @@
   margin-bottom: 0.5rem;
 }
 
+.button-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  background: linear-gradient(to bottom, transparent, var(--card-background) 20%);
+}
+
+.delete-button,
+.rickify-button {
+  width: 110px;
+  padding: 8px 0;
+  border: 2px solid;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  text-align: center;
+  background: var(--card-background);
+}
+
+.delete-button {
+  background-color: transparent;
+  border-color: #ff5757;
+  color: #ff5757;
+}
+
+.delete-button:hover {
+  background-color: #ff5757;
+  color: var(--card-background);
+  box-shadow: 0 0 10px rgba(255, 87, 87, 0.3);
+}
+
+.rickify-button {
+  background-color: transparent;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.rickify-button:hover {
+  background-color: var(--primary-color);
+  color: var(--card-background);
+  box-shadow: 0 0 10px rgba(151, 206, 76, 0.3);
+}
 
 .carousel-button {
   position: absolute;
@@ -110,15 +161,19 @@
     width: 240px;
   }
 
-  .character-image {
-    height: 240px;
+  .character-info {
+    padding: 1rem;
+    padding-bottom: 70px;
   }
 
-  .character-info {
+  .button-container {
     padding: 1rem;
   }
 
-  .character-name {
-    font-size: 1.25rem;
+  .delete-button,
+  .rickify-button {
+    width: 95px;
+    padding: 6px 0;
+    font-size: 0.75rem;
   }
 }
