@@ -82,6 +82,7 @@ function NavBar() {
     return (
         <nav className="navbar">
             <div className="navbar-content">
+
                 <Link to="/" className="site-title" onClick={handleLinkClick}>Rick and Morty Universe</Link>
                 <button className="hamburger" onClick={toggleMobileMenu}>
                     <span></span>
@@ -89,7 +90,7 @@ function NavBar() {
                     <span></span>
                 </button>
                 <div className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
-                    <Link to="/about" className="nav-link" onClick={handleLinkClick}>About</Link>
+                    <Link to="/About" className="nav-link">About</Link>
                     <button onClick={() => { startPickleRain(); handleLinkClick(); }} className="nav-link pickle-btn">Pickles</button>
                     
                     {currentUser ? (
