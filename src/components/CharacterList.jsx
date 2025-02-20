@@ -2,10 +2,12 @@ import React, { useRef } from 'react';
 import './CharacterList.css'
 import { useNavigate } from 'react-router-dom'
 import { rickifyCharacter } from '../services/openai';
+import { useAuth } from './AuthContext';
 
 const CharacterList = ({ characters, onDelete, onUpdate }) => {
     const navigate = useNavigate()
     const carouselRef = useRef(null);
+    const { currentUser } = useAuth();
 
     const handleCharacterClick = (characterDetail) => {
         navigate(`/character/${characterDetail.id}`);
@@ -102,11 +104,13 @@ const CharacterList = ({ characters, onDelete, onUpdate }) => {
                                             >
                                                 Delete Character
                                             </button>
-                                            <button className='rickify-button'
-                                                onClick={(e) => handleRickify(e, characterDetail)}
-                                            >
-                                                Rickify Character
-                                            </button>
+                                            {currentUser && (
+                                                <button className='rickify-button'
+                                                    onClick={(e) => handleRickify(e, characterDetail)}
+                                                >
+                                                    Rickify Character
+                                                </button>
+                                            )}
                                         </div>
                                     )}
                                 </div>

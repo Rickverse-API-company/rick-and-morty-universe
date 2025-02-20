@@ -8,6 +8,7 @@ import {
 import { auth } from '../config/FirebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import GitHubLogin from './GitHubLogin';
+import './Login.css';
 
 
 const Login = () => {
@@ -51,6 +52,9 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
+                
+                <button type="submit">Login</button>
+
                 <label>
                     <input
                         type="checkbox"
@@ -59,7 +63,6 @@ const Login = () => {
                     />
                     Remember Me
                 </label>
-                <button type="submit">Login</button>
                 {error && <p className="error">{error}</p>}
             </form>
             <br/>
